@@ -27,6 +27,70 @@ This skill provides commands to sync design tokens between your app codebase and
 
 ## Commands
 
+### `/sync-all-tokens` ⭐ (Recommended)
+
+Sync **all** design tokens from codebase to Figma in one command.
+
+**What it does:**
+1. Scans codebase for all token definitions (CSS, Tailwind, component styles)
+2. Extracts and organizes: Colors, Typography, Spacing, Size, Radius, Border, Elevation
+3. Creates/updates Figma variables and text styles with Light/Dark modes
+
+**Usage:**
+```
+/sync-all-tokens
+```
+
+**Token Categories Synced:**
+- ✅ **Colors** - Neutral, Primary, Success, Warning, Error (Light/Dark modes)
+- ✅ **Typography** - Font families, sizes, weights, line heights → Text styles
+- ✅ **Spacing** - Layout spacing scale (4px, 8px, 16px, 24px, etc.)
+- ✅ **Size** - Icon sizes, avatar sizes, component dimensions
+- ✅ **Radius** - Border radius values (0px, 4px, 8px, 16px, 9999px)
+- ✅ **Border** - Border width values (1px, 2px, 4px)
+- ✅ **Elevation** - Shadow primitives (low, medium, high depth)
+
+**Example CSS Input:**
+```css
+:root {
+  --color-primary-500: #3B82F6;
+  --spacing-4: 16px;
+  --size-md: 24px;
+  --radius-md: 8px;
+  --border-1: 1px;
+  --elevation-low: 0 1px 3px rgba(0,0,0,0.1);
+}
+```
+
+**Creates in Figma:**
+```
+Variables
+├── Colors → primary-500 (Light/Dark)
+├── Spacing → spacing-4 (16px)
+├── Size → size-md (24px)
+├── Radius → radius-md (8px)
+├── Border → border-1 (1px)
+└── Elevation → elevation-low (shadow)
+
+Text Styles
+└── [From component style files]
+```
+
+**Output:**
+```
+✅ Synced all tokens to Figma
+
+Colors: 42 variables (Light/Dark configured)
+Typography: 12 text styles
+Spacing: 8 variables
+Size: 6 variables
+Radius: 5 variables
+Border: 3 variables
+Elevation: 3 variables
+
+Total: 79 tokens synced ✅
+```
+
 ### `/validate-tokens`
 
 Validate token structure and naming conventions for proper semantic hierarchy.

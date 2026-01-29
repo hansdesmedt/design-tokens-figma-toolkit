@@ -6,10 +6,11 @@ Complete toolkit for design tokens: sync between codebase and Figma + validate t
 
 Complete design tokens workflow:
 
-**Sync (Code ↔ Figma):**
-- **Push colors** from CSS/Tailwind to Figma variables
-- **Push typography** from component styles to Figma text styles
-- **Verify documentation** matches actual variable values
+**Sync (Code → Figma):**
+- **Push ALL tokens** in one command: Colors, Typography, Spacing, Size, Radius, Border, Elevation
+- **Light/Dark modes** - Auto-configured for color tokens
+- **Text styles** - Complete typography hierarchy
+- **Verify documentation** - Keep Figma docs in sync with variables
 
 **Validate (Quality Check):**
 - **Validate structure** - Primitive → Semantic → Responsive hierarchy
@@ -26,9 +27,8 @@ npx skills add hansdesmedt/design-tokens-figma-toolkit
 ## 🚀 Quick Start
 
 ```bash
-# 1. Push tokens from CODE → FIGMA
-/sync-colors       # CSS/Tailwind → Figma color variables
-/sync-typography   # Component styles → Figma text styles
+# 1. Sync ALL tokens from CODE → FIGMA (one command!)
+/sync-all-tokens   # Colors, Typography, Spacing, Size, Radius, Border, Elevation
 
 # 2. Update Figma docs (after variables changed)
 /sync-docs         # Figma variables → Figma documentation tables
@@ -41,12 +41,61 @@ npx skills add hansdesmedt/design-tokens-figma-toolkit
 
 | Command | Direction | What It Does |
 |---------|-----------|--------------|
-| `/sync-colors` | CODE → FIGMA | Push color definitions to Figma variables |
-| `/sync-typography` | CODE → FIGMA | Push text styles to Figma |
+| `/sync-all-tokens` ⭐ | CODE → FIGMA | Sync ALL tokens at once (recommended) |
 | `/sync-docs` | FIGMA ↔ FIGMA | Sync Figma docs with Figma variables (after changes) |
 | `/validate-tokens` | EXPORT → CHECK | Validate token structure & naming (quality control) |
 
+### Advanced: Individual Sync Commands
+
+| Command | Direction | What It Does |
+|---------|-----------|--------------|
+| `/sync-colors` | CODE → FIGMA | Push only colors to Figma variables |
+| `/sync-typography` | CODE → FIGMA | Push only text styles to Figma |
+
+## 📦 What Gets Synced
+
+When you run `/sync-all-tokens`, these token categories are synced:
+
+| Category | Examples | Format |
+|----------|----------|--------|
+| **Colors** | Neutral, Primary, Success, Warning, Error | `neutral-100`, `primary-500` |
+| **Typography** | Font families, sizes, weights, line heights | `Body/font-body-md` (Text Style) |
+| **Spacing** | Layout spacing, component padding/margin | `spacing-4` (16px), `spacing-8` (32px) |
+| **Size** | Icon sizes, avatar sizes, component dimensions | `size-sm` (16px), `size-md` (24px) |
+| **Radius** | Border radius values | `radius-sm` (4px), `radius-md` (8px) |
+| **Border** | Border width values | `border-1` (1px), `border-2` (2px) |
+| **Elevation** | Shadow primitives for depth | `elevation-low`, `elevation-medium` |
+
+**Not synced:** Opacity (handled in Figma directly)
+
 ## 📋 Commands
+
+### `/sync-all-tokens` ⭐
+
+Sync ALL design tokens from codebase to Figma in one command.
+
+**Input:** CSS variables, Tailwind config, component styles
+**Output:** Complete set of Figma variables and text styles
+
+```bash
+/sync-all-tokens
+```
+
+**Example CSS:**
+```css
+:root {
+  --color-primary-500: #3B82F6;
+  --spacing-4: 16px;
+  --size-md: 24px;
+  --radius-md: 8px;
+  --border-1: 1px;
+  --elevation-low: 0 1px 3px rgba(0,0,0,0.1);
+}
+```
+
+**Creates in Figma:**
+- Variables: Colors (Light/Dark), Spacing, Size, Radius, Border, Elevation
+- Text Styles: Typography hierarchy from component files
 
 ### `/validate-tokens`
 Validate token structure, naming, and best practices (quality check on exported tokens).
@@ -122,9 +171,10 @@ After /sync-docs:   color-text-title (Dark) = "neutral-white" ✅
 ### The Flow Explained
 
 ```
-YOUR CODE (CSS/Tailwind)
+YOUR CODE (CSS/Tailwind/Components)
+  Colors, Typography, Spacing, Size, Radius, Border, Elevation
     ↓
-[/sync-colors, /sync-typography] ← Push to Figma
+[/sync-all-tokens] ← Push ALL tokens to Figma
     ↓
 FIGMA VARIABLES & TEXT STYLES
     ↓
@@ -144,10 +194,10 @@ Export tokens.json
 ```bash
 # 1. Define tokens in your code
 # (CSS variables, Tailwind config, component styles)
+# Include: colors, typography, spacing, size, radius, border, elevation
 
-# 2. Push tokens to Figma
-/sync-colors       # CODE → FIGMA (creates color variables)
-/sync-typography   # CODE → FIGMA (creates text styles)
+# 2. Push ALL tokens to Figma (one command!)
+/sync-all-tokens   # CODE → FIGMA (creates variables & text styles)
 
 # 3. Create documentation frames in Figma manually
 # (Token tables with columns: Token | Light | Dark)
@@ -162,12 +212,8 @@ Export tokens.json
 ### Daily Development
 
 ```bash
-# Updated colors in code?
-/sync-colors       # Push changes to Figma
-/sync-docs         # Update Figma documentation tables
-
-# Updated typography in code?
-/sync-typography   # Push changes to Figma
+# Updated ANY tokens in code?
+/sync-all-tokens   # Push ALL changes to Figma
 /sync-docs         # Update Figma documentation tables
 
 # Want to validate token quality?
