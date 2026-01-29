@@ -1,3 +1,12 @@
+---
+name: design-tokens-figma-sync
+description: Sync design tokens between codebase and Figma. Push colors, typography, and verify documentation. Use when asked to "sync tokens to Figma", "update Figma colors", or "verify Figma docs".
+metadata:
+  author: hansdesmedt
+  version: "1.0.0"
+  argument-hint: <command>
+---
+
 # Design Tokens Figma Sync
 
 Bidirectional synchronization between your codebase and Figma design tokens.
